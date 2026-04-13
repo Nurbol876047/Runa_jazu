@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;700;800&family=Manrope:wght@400;500;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20260414-touch-targets" />
+    <link rel="stylesheet" href="styles.css?v=20260414-mobile-desktop" />
   </head>
   <body>
     <div class="page-shell">
@@ -54,14 +54,28 @@
             </p>
           </div>
 
+          <div class="board-toolbar" aria-label="Әліпби өлшемін басқару">
+            <div class="board-toolbar__group">
+              <button id="zoom-out-btn" class="button button--ghost button--mini" type="button">
+                Кішірейту
+              </button>
+              <button id="zoom-in-btn" class="button button--soft button--mini" type="button">
+                Үлкейту
+              </button>
+            </div>
+            <strong id="zoom-level" class="board-toolbar__value">100%</strong>
+          </div>
+
           <div class="board-frame">
-            <div id="alphabet-board" class="alphabet-board">
-              <img
-                id="board-image"
-                src="assets/alphabet-board.png"
-                alt="Көне түркі әліпбиі көрсетілген кесте"
-              />
-              <div id="hotspots" class="hotspots" aria-hidden="false"></div>
+            <div id="board-viewport" class="board-viewport">
+              <div id="alphabet-board" class="alphabet-board">
+                <img
+                  id="board-image"
+                  src="assets/alphabet-board.png"
+                  alt="Көне түркі әліпбиі көрсетілген кесте"
+                />
+                <div id="hotspots" class="hotspots" aria-hidden="false"></div>
+              </div>
             </div>
           </div>
 
@@ -361,6 +375,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
-    <script src="app.js?v=20260414-hand-only-text"></script>
+    <script src="app.js?v=20260414-mobile-desktop"></script>
   </body>
 </html>

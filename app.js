@@ -5,6 +5,9 @@ const HAND_TRIGGER_COOLDOWN_MS = 260;
 const HAND_REARM_DELAY_MS = 220;
 const HOTSPOT_PADDING_FINE = { x: 8, y: 10 };
 const HOTSPOT_PADDING_COARSE = { x: 14, y: 16 };
+const BOARD_ZOOM_MIN = 1;
+const BOARD_ZOOM_MAX = 2.6;
+const BOARD_ZOOM_STEP = 0.2;
 const VOICE_PRIORITIES = ["kk-kz", "kk", "tr-tr", "tr", "ru-ru", "ru", "en-us", "en-gb", "en"];
 const AUDIO_BASE_PATH = "assets/audio";
 
@@ -394,6 +397,8 @@ const state = {
   speechPrimed: false,
   speechRequestId: 0,
   boardReady: false,
+  boardZoom: 1,
+  boardZoomInitialized: false,
   camera: null,
   hands: null,
   cameraRunning: false,
@@ -410,6 +415,7 @@ const state = {
 const cardById = new Map(CARDS.map((card) => [card.id, card]));
 
 const boardImage = document.getElementById("board-image");
+const boardViewport = document.getElementById("board-viewport");
 const hotspotsLayer = document.getElementById("hotspots");
 const previewCanvas = document.getElementById("preview-canvas");
 const selectedLabel = document.getElementById("selected-label");
@@ -423,6 +429,9 @@ const startCameraButton = document.getElementById("start-camera");
 const toggleVoiceButton = document.getElementById("toggle-voice");
 const speakAgainButton = document.getElementById("speak-again");
 const fullscreenButton = document.getElementById("fullscreen-btn");
+const zoomOutButton = document.getElementById("zoom-out-btn");
+const zoomInButton = document.getElementById("zoom-in-btn");
+const zoomLevel = document.getElementById("zoom-level");
 const handCursor = document.getElementById("hand-cursor");
 const cameraVideo = document.getElementById("camera-video");
 const cameraCanvas = document.getElementById("camera-canvas");
@@ -531,6 +540,60 @@ function hasAudioSupport() {
 function updateVoiceStatus(text) {
   if (voiceStatusText) {
     voiceStatusText.textContent = text;
+  }
+}
+
+function getDefaultBoardZoom() {
+  if (window.innerWidth <= 560) return 2;
+  if (window.innerWidth <= 820) return 1.65;
+  return 1;
+}
+
+function applyBoardZoom(options = {}) {
+  const { keepCenter = false } = options;
+  const zoom = Math.min(BOARD_ZOOM_MAX, Math.max(BOARD_ZOOM_MIN, state.boardZoom));
+
+  state.boardZoom = zoom;
+  document.documentElement.style.setProperty("--board-zoom", String(zoom));
+
+  if (zoomLevel) {
+    zoomLevel.textContent = `${Math.round(zoom * 100)}%`;
+  }
+
+  if (zoomOutButton) {
+    zoomOutButton.disabled = zoom <= BOARD_ZOOM_MIN + 0.001;
+  }
+
+  if (zoomInButton) {
+    zoomInButton.disabled = zoom >= BOARD_ZOOM_MAX - 0.001;
+  }
+
+  if (keepCenter && boardViewport) {
+    window.requestAnimationFrame(() => {
+      const maxLeft = Math.max(0, boardViewport.scrollWidth - boardViewport.clientWidth);
+      const maxTop = Math.max(0, boardViewport.scrollHeight - boardViewport.clientHeight);
+      boardViewport.scrollLeft = maxLeft / 2;
+      boardViewport.scrollTop = maxTop / 2;
+    });
+  }
+}
+
+function setBoardZoom(nextZoom, options = {}) {
+  state.boardZoom = nextZoom;
+  applyBoardZoom(options);
+}
+
+function maybeApplyResponsiveBoardZoom() {
+  const nextZoom = getDefaultBoardZoom();
+
+  if (!state.boardZoomInitialized) {
+    state.boardZoomInitialized = true;
+    setBoardZoom(nextZoom, { keepCenter: nextZoom > 1 });
+    return;
+  }
+
+  if (window.innerWidth > 820 && state.boardZoom !== 1) {
+    setBoardZoom(1);
   }
 }
 
@@ -1070,6 +1133,7 @@ function init() {
   updateVoiceStatus("Дайындалуда...");
   setupAudio();
   createHotspots();
+  maybeApplyResponsiveBoardZoom();
   setupVoices();
   updateVoiceButton();
 
@@ -1115,7 +1179,16 @@ function init() {
 
   fullscreenButton.addEventListener("click", handleFullscreen);
 
+  zoomOutButton?.addEventListener("click", () => {
+    setBoardZoom(state.boardZoom - BOARD_ZOOM_STEP);
+  });
+
+  zoomInButton?.addEventListener("click", () => {
+    setBoardZoom(state.boardZoom + BOARD_ZOOM_STEP, { keepCenter: true });
+  });
+
   window.addEventListener("resize", () => {
+    maybeApplyResponsiveBoardZoom();
     drawPreview(getCurrentCard());
   });
 
