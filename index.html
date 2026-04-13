@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="kk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Көне түркі әліпбиі</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;700;800&family=Manrope:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=20260414-touch-targets" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero__copy">
+          <p class="eyebrow">Интерактивті сабақ құралы</p>
+          <h1>Көне түркі әліпбиін қолмен таңдауға болады</h1>
+          <p class="hero__lead">
+            Камераны қосып, саусағыңызды әріп үстінде бір сәт ұстап тұрыңыз.
+            Сайт таңбаны дауыстап оқып, оның
+            <strong>дауысты</strong> не <strong>дауыссыз</strong> екенін айтады.
+          </p>
+        </div>
+
+        <div class="hero__actions">
+          <button id="start-camera" class="button button--primary" type="button">
+            Қолмен таңдау режимін қосу
+          </button>
+          <button id="toggle-voice" class="button button--soft" type="button" aria-pressed="true">
+            Дыбыстау: қосулы
+          </button>
+          <button id="speak-again" class="button button--ghost" type="button">
+            Қайта айту
+          </button>
+          <button id="fullscreen-btn" class="button button--ghost" type="button">
+            Толық экран
+          </button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="panel panel--board">
+          <div class="panel__header">
+            <div>
+              <p class="eyebrow">Әліпби тақтасы</p>
+              <h2>Таңбаны тікелей тақтадан таңдаңыз</h2>
+            </div>
+            <p class="panel__hint">
+              Оқушы қол режимінде саусағын қажетті әріптің үстінде шамамен
+              1 секунд ұстайды.
+            </p>
+          </div>
+
+          <div class="board-frame">
+            <div id="alphabet-board" class="alphabet-board">
+              <img
+                id="board-image"
+                src="assets/alphabet-board.png"
+                alt="Көне түркі әліпбиі көрсетілген кесте"
+              />
+              <div id="hotspots" class="hotspots" aria-hidden="false"></div>
+            </div>
+          </div>
+
+          <div class="legend">
+            <div class="legend__item">
+              <span class="legend__dot legend__dot--vowel"></span>
+              Дауысты
+            </div>
+            <div class="legend__item">
+              <span class="legend__dot legend__dot--soft"></span>
+              Дауыссыз жіңішке
+            </div>
+            <div class="legend__item">
+              <span class="legend__dot legend__dot--hard"></span>
+              Дауыссыз жуан
+            </div>
+            <div class="legend__item">
+              <span class="legend__dot legend__dot--compound"></span>
+              Қосарлы не қосымша таңба
+            </div>
+          </div>
+        </section>
+
+        <aside class="panel panel--info">
+          <div class="selected-card">
+            <div class="selected-card__top">
+              <div>
+                <p class="eyebrow" id="selected-kind">Негізгі таңба</p>
+                <h2 id="selected-label">А</h2>
+              </div>
+              <span id="type-pill" class="type-pill type-pill--vowel">Дауысты</span>
+            </div>
+
+            <p id="selected-description" class="selected-card__description">
+              А таңбасы дауысты дыбысты білдіреді. Таңба таңдалғанда сайт оны
+              дауыстап айтады.
+            </p>
+
+            <canvas
+              id="preview-canvas"
+              class="preview-canvas"
+              width="420"
+              height="340"
+              aria-label="Таңдалған карточканың үлкейтілген көрінісі"
+            ></canvas>
+
+            <div class="stats">
+              <div class="stat">
+                <span class="stat__label">Айтылатын мәтін</span>
+                <strong id="spoken-text">А. Дауысты дыбыс.</strong>
+              </div>
+              <div class="stat">
+                <span class="stat__label">Соңғы таңдау</span>
+                <strong id="selection-source">Қолмен таңдалды</strong>
+              </div>
+              <div class="stat">
+                <span class="stat__label">Дыбыс күйі</span>
+                <strong id="voice-status-text">Дайындалуда...</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="camera-box">
+            <div class="camera-box__header">
+              <div>
+                <p class="eyebrow">Қолмен басқару</p>
+                <h3>Камера алдын ала қарау</h3>
+              </div>
+              <span id="camera-status" class="status-pill">Өшірулі</span>
+            </div>
+
+            <div class="camera-stage">
+              <video id="camera-video" playsinline muted></video>
+              <canvas id="camera-canvas" width="320" height="240"></canvas>
+              <div id="camera-placeholder" class="camera-placeholder">
+                Қол режимін қосқанда камера осында көрінеді.
+              </div>
+            </div>
+
+            <div class="camera-grid">
+              <div class="camera-grid__item">
+                <span>Бақылау</span>
+                <strong id="tracking-status">Дайын</strong>
+              </div>
+              <div class="camera-grid__item">
+                <span>Таңдау прогресі</span>
+                <strong id="hover-status">0%</strong>
+              </div>
+            </div>
+
+            <p class="camera-note">
+              Кеңес: сұқ саусақты әріптің үстінде бір сәт ұстап тұрыңыз. Камера
+              рұқсатын браузерден беру қажет.
+            </p>
+          </div>
+        </aside>
+      </main>
+
+      <section class="knowledge-hub">
+        <article class="panel knowledge-hero">
+          <div>
+            <p class="eyebrow">Руна жазуы туралы</p>
+            <h2>Орхон-Енисей мұрасы түркі өркениетінің жазба үні саналады</h2>
+            <p class="knowledge-lead">
+              Көне түркі руна жазуы - түркі халықтарының ең маңызды жазба
+              ескерткіштерінің бірі. Бұл әліпби арқылы қағанат дәуіріндегі
+              тарих, ел басқару, ерлік, бірлік және ұрпаққа қалдырылған өсиет
+              сөздер тасқа қашалып жазылған.
+            </p>
+          </div>
+
+          <div class="knowledge-stats">
+            <div class="knowledge-stat">
+              <span>Кезеңі</span>
+              <strong>VI-VIII ғасырлар</strong>
+            </div>
+            <div class="knowledge-stat">
+              <span>Негізгі аймақтары</span>
+              <strong>Орхон, Енисей, Талас өңірі</strong>
+            </div>
+            <div class="knowledge-stat">
+              <span>Белгілі тұлғалар</span>
+              <strong>Күлтегін, Білге қаған, Тоныкөк</strong>
+            </div>
+          </div>
+        </article>
+
+        <div class="knowledge-gallery">
+          <figure class="panel knowledge-photo">
+            <img
+              src="assets/knowledge/kultegin-raw.jpg"
+              alt="Күлтегін ескерткіші бейнеленген тас жазба"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Күлтегін ескерткіші</strong>
+              <span>Түркі қағанатының даңқты тұлғасына арналған тас жазу.</span>
+              <small>Wikimedia Commons, public domain.</small>
+            </figcaption>
+          </figure>
+
+          <figure class="panel knowledge-photo">
+            <img
+              src="assets/knowledge/bilge-khagan-raw.jpg"
+              alt="Білге қаған ескерткіші бейнеленген тас жазба"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Білге қаған ескерткіші</strong>
+              <span>Көне түркі жазба мәдениетінің ең маңызды мұраларының бірі.</span>
+              <small>Wikimedia Commons, public domain.</small>
+            </figcaption>
+          </figure>
+
+          <figure class="panel knowledge-photo knowledge-photo--wide">
+            <img
+              src="assets/knowledge/orkhon-river-raw.jpg"
+              alt="Моңғолиядағы Орхон өзені мен аңғарының көрінісі"
+              loading="lazy"
+            />
+            <figcaption>
+              <strong>Орхон аңғары</strong>
+              <span>Орхон-Енисей жазбалары табылған тарихи-мәдени кеңістік.</span>
+              <small>Wikimedia Commons, CC0.</small>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="knowledge-grid">
+          <article class="panel info-tile">
+            <p class="eyebrow">Шығу тегі</p>
+            <h3>Бұл жазу не үшін керек болды?</h3>
+            <p>
+              Руна жазуы көне түркі мемлекетінің саяси өмірін, жорықтарын,
+              ата-баба өсиетін және елдің бірлігін кейінгі ұрпаққа жеткізу үшін
+              қолданылған.
+            </p>
+          </article>
+
+          <article class="panel info-tile">
+            <p class="eyebrow">Ескерткіштер</p>
+            <h3>Ең танымал тас жазбалар</h3>
+            <p>
+              Орхон жазбалары ішінде Күлтегін, Білге қаған және Тоныкөк
+              ескерткіштері ерекше орын алады. Олар түркі әлемінің тарихи
+              жадысы ретінде бағаланады.
+            </p>
+          </article>
+
+          <article class="panel info-tile">
+            <p class="eyebrow">Әліпби ерекшелігі</p>
+            <h3>Таңбалар жүйесі қалай құрылған?</h3>
+            <p>
+              Әліпбиде дауысты, дауыссыз және қосарлы таңбалар бар. Кейбір
+              дауыссыздардың жуан және жіңішке нұсқалары бөлек көрсетіледі,
+              сондықтан дыбыстық айырмашылық анық байқалады.
+            </p>
+          </article>
+
+          <article class="panel info-tile">
+            <p class="eyebrow">Оқу бағыты</p>
+            <h3>Мәтінді қалай танимыз?</h3>
+            <p>
+              Көптеген көне түркі мәтіндері оңнан солға қарай оқылады. Әр
+              таңбаның пішіні қысқа әрі айқын болғандықтан, тасқа қашап жазуға
+              ыңғайлы болған.
+            </p>
+          </article>
+        </div>
+
+        <article class="panel presentation-panel">
+          <div class="panel__header">
+            <div>
+              <p class="eyebrow">Презентация бөліктері</p>
+              <h2>Сабақта қолдануға болатын дайын құрылым</h2>
+            </div>
+            <p class="panel__hint">
+              Бұл блоктарды слайдқа да, мұғалімнің ауызша түсіндіруіне де
+              қолдануға болады.
+            </p>
+          </div>
+
+          <div class="presentation-steps">
+            <article class="presentation-step">
+              <span class="presentation-step__num">1</span>
+              <div>
+                <h3>Руна жазуы деген не?</h3>
+                <p>
+                  Оқушыларға көне түркі руна жазуы түркі халықтарының алғашқы
+                  жазба мұрасы екенін қысқаша түсіндіріңіз.
+                </p>
+              </div>
+            </article>
+
+            <article class="presentation-step">
+              <span class="presentation-step__num">2</span>
+              <div>
+                <h3>Қай жерде табылған?</h3>
+                <p>
+                  Орхон, Енисей және Талас аймақтарындағы жазбалар арқылы бұл
+                  мұраның кең таралғанын көрсетіңіз.
+                </p>
+              </div>
+            </article>
+
+            <article class="presentation-step">
+              <span class="presentation-step__num">3</span>
+              <div>
+                <h3>Қандай тұлғалармен байланысты?</h3>
+                <p>
+                  Күлтегін, Білге қаған және Тоныкөк есімдерін атап, олардың
+                  түркі тарихындағы орнын түсіндіріңіз.
+                </p>
+              </div>
+            </article>
+
+            <article class="presentation-step">
+              <span class="presentation-step__num">4</span>
+              <div>
+                <h3>Әліпбидің ерекшелігі қандай?</h3>
+                <p>
+                  Дауысты, дауыссыз және қосарлы таңбалар жүйесін осы
+                  интерактивті тақта арқылы нақты мысалмен көрсетіңіз.
+                </p>
+              </div>
+            </article>
+
+            <article class="presentation-step">
+              <span class="presentation-step__num">5</span>
+              <div>
+                <h3>Неге бүгін де маңызды?</h3>
+                <p>
+                  Бұл жазулар халқымыздың тарихи жадысын, тіл мәдениетін және
+                  мемлекеттік ойлау дәстүрін сақтап жеткізгенін айтыңыз.
+                </p>
+              </div>
+            </article>
+
+            <article class="presentation-step">
+              <span class="presentation-step__num">6</span>
+              <div>
+                <h3>Тәжірибелік жұмыс</h3>
+                <p>
+                  Оқушы әріпті таңдап, дыбысталуын тыңдап, оның дауысты не
+                  дауыссыз екенін анықтап айтып берсін.
+                </p>
+              </div>
+            </article>
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <div id="hand-cursor" class="hand-cursor" hidden>
+      <div class="hand-cursor__core"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script src="app.js?v=20260414-hand-only-text"></script>
+  </body>
+</html>

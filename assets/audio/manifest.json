@@ -1,0 +1,150 @@
+{
+  "voice": "kk-KZ-AigulNeural",
+  "generatedAt": "2026-04-13T19:08:47.049Z",
+  "cards": {
+    "zh-y": {
+      "text": "Ж немесе Й. Дауыссыз дыбыс, жуан және жіңішке нұсқалары бар.",
+      "src": "assets/audio/zh-y.mp3"
+    },
+    "e": {
+      "text": "Е. Дауысты дыбыс.",
+      "src": "assets/audio/e.mp3"
+    },
+    "d": {
+      "text": "Д. Дауыссыз дыбыс, жуан және жіңішке нұсқалары бар.",
+      "src": "assets/audio/d.mp3"
+    },
+    "g-gh": {
+      "text": "Г немесе Ғ. Дауыссыз дыбыс, жуан және жіңішке нұсқалары бар.",
+      "src": "assets/audio/g-gh.mp3"
+    },
+    "v": {
+      "text": "В. Дауыссыз дыбыс.",
+      "src": "assets/audio/v.mp3"
+    },
+    "b": {
+      "text": "Б. Дауыссыз дыбыс, жуан және жіңішке нұсқалары бар.",
+      "src": "assets/audio/b.mp3"
+    },
+    "ae": {
+      "text": "Ә. Дауысты дыбыс.",
+      "src": "assets/audio/ae.mp3"
+    },
+    "a": {
+      "text": "А. Дауысты дыбыс.",
+      "src": "assets/audio/a.mp3"
+    },
+    "alt-lt-ld": {
+      "text": "Алт, Лт немесе Лд. Қосарлы таңба.",
+      "src": "assets/audio/alt-lt-ld.mp3"
+    },
+    "ant-nt-nd": {
+      "text": "Ант, Нт немесе Нд. Қосарлы таңба.",
+      "src": "assets/audio/ant-nt-nd.mp3"
+    },
+    "nch-nsh": {
+      "text": "Нч немесе Нш. Қосарлы таңба.",
+      "src": "assets/audio/nch-nsh.mp3"
+    },
+    "ik-ek-yk": {
+      "text": "Ик, Ек немесе Ық. Қосарлы таңба.",
+      "src": "assets/audio/ik-ek-yk.mp3"
+    },
+    "ok-uk-front": {
+      "text": "Өк немесе Үк. Қосарлы таңба.",
+      "src": "assets/audio/ok-uk-front.mp3"
+    },
+    "oq-uq": {
+      "text": "Оқ немесе Ұқ. Қосарлы таңба.",
+      "src": "assets/audio/oq-uq.mp3"
+    },
+    "o-u": {
+      "text": "О немесе У. Дауысты дыбыс.",
+      "src": "assets/audio/o-u.mp3"
+    },
+    "ng": {
+      "text": "Ң. Дауыссыз дыбыс.",
+      "src": "assets/audio/ng.mp3"
+    },
+    "n": {
+      "text": "Н. Дауыссыз дыбыс, жуан және жіңішке нұсқалары бар.",
+      "src": "assets/audio/n.mp3"
+    },
+    "m": {
+      "text": "М. Дауыссыз дыбыс.",
+      "src": "assets/audio/m.mp3"
+    },
+    "l": {
+      "text": "Л. Дауыссыз дыбыс, жуан және жіңішке нұсқалары бар.",
+      "src": "assets/audio/l.mp3"
+    },
+    "k-q": {
+      "text": "К немесе Қ. Дауыссыз дыбыс, жуан және жіңішке нұсқалары бар.",
+      "src": "assets/audio/k-q.mp3"
+    },
+    "i": {
+      "text": "И. Дауысты дыбыс.",
+      "src": "assets/audio/i.mp3"
+    },
+    "z": {
+      "text": "З. Дауыссыз дыбыс.",
+      "src": "assets/audio/z.mp3"
+    },
+    "ai-yai": {
+      "text": "Ай немесе Яй. Қосарлы таңба.",
+      "src": "assets/audio/ai-yai.mp3"
+    },
+    "ot-ut": {
+      "text": "От немесе Ут. Қосарлы таңба.",
+      "src": "assets/audio/ot-ut.mp3"
+    },
+    "art-rt-rd": {
+      "text": "Арт, Рт немесе Рд. Қосарлы таңба.",
+      "src": "assets/audio/art-rt-rd.mp3"
+    },
+    "c": {
+      "text": "Ц. Дауыссыз дыбыс.",
+      "src": "assets/audio/c.mp3"
+    },
+    "h": {
+      "text": "Х. Дауыссыз дыбыс.",
+      "src": "assets/audio/h.mp3"
+    },
+    "f": {
+      "text": "Ф. Дауыссыз дыбыс.",
+      "src": "assets/audio/f.mp3"
+    },
+    "t": {
+      "text": "Т. Дауыссыз дыбыс, жуан және жіңішке нұсқалары бар.",
+      "src": "assets/audio/t.mp3"
+    },
+    "s": {
+      "text": "С. Дауыссыз дыбыс, жуан және жіңішке нұсқалары бар.",
+      "src": "assets/audio/s.mp3"
+    },
+    "r": {
+      "text": "Р. Дауыссыз дыбыс, жуан және жіңішке нұсқалары бар.",
+      "src": "assets/audio/r.mp3"
+    },
+    "p": {
+      "text": "П. Дауыссыз дыбыс.",
+      "src": "assets/audio/p.mp3"
+    },
+    "oe-ue": {
+      "text": "Ө немесе Ү. Дауысты дыбыс.",
+      "src": "assets/audio/oe-ue.mp3"
+    },
+    "i-y": {
+      "text": "І немесе Ы. Дауысты дыбыс.",
+      "src": "assets/audio/i-y.mp3"
+    },
+    "sh": {
+      "text": "Ш. Дауыссыз дыбыс, жуан және жіңішке нұсқалары бар.",
+      "src": "assets/audio/sh.mp3"
+    },
+    "ch": {
+      "text": "Ч. Дауыссыз дыбыс, жуан және жіңішке нұсқалары бар.",
+      "src": "assets/audio/ch.mp3"
+    }
+  }
+}
